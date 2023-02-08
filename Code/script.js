@@ -1,6 +1,5 @@
 const passwordDisplay = document.querySelector(".password");
 const copyButton = document.querySelector(".btn-one");
-
 const charCount = document.querySelector(".char-length");
 const charSlider = document.querySelector("input[type=range]");
 const uppercaseLetters = document.getElementById("chk1");
@@ -10,13 +9,23 @@ const includeSymbols = document.getElementById("chk4");
 const form = document.querySelector("#passwordGeneratorForm");
 const strengthValue = document.querySelector(".value");
 const generateButton = document.querySelector(".generator");
+const value1 = document.getElementById("value1");
+const value2 = document.getElementById("value2");
+const value3 = document.getElementById("value3");
+const value4 = document.getElementById("value4");
+const indicatorValue = document.querySelector(".indicator-value");
 
 charSlider.addEventListener("input", syncCharacterAmount);
-
 function syncCharacterAmount(e) {
   const value = e.target.value;
   charSlider.value = value;
   charCount.innerHTML = value;
+  const min = charSlider.min;
+  const max = charSlider.max;
+  const val = charSlider.value;
+
+  charSlider.style.backgroundSize =
+    ((val - min) * 100) / (max - min) + "% 100%";
 }
 
 const uppercaseCharCode = arrayFromLowToHigh(65, 90);
@@ -28,7 +37,38 @@ const symbolsCharCode = arrayFromLowToHigh(33, 47)
   .concat(arrayFromLowToHigh(123, 126));
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-
+  const checkboxCount = document.querySelectorAll(
+    "input[type=checkbox]:checked"
+  ).length;
+  let characterLength = Math.floor(charSlider.value / 4);
+  const total = characterLength + checkboxCount;
+  indicatorValue.style.visibility = "visible";
+  if (total <= 3) {
+    indicatorValue.innerText = "Too Weak";
+    value1.className = "status-too-weak";
+    value2.className = "";
+    value3.className = "";
+    value4.className = "";
+  } else if (total < 5) {
+    indicatorValue.innerText = "Weak";
+    value1.className = "status-weak";
+    value2.className = "status-weak";
+    value3.className = "";
+    value4.className = "";
+  } else if (total < 6) {
+    indicatorValue.innerText = "Medium";
+    value1.className = "status-medium";
+    value2.className = "status-medium";
+    value3.className = "status-medium";
+    value4.className = "";
+  } else {
+    indicatorValue.innerText = "Strong";
+    value1.className = "status-strong";
+    value2.className = "status-strong";
+    value3.className = "status-strong";
+    value4.className = "status-strong";
+  }
+  console.log(total);
   if (
     !uppercaseLetters.checked &&
     !lowercaseLetters.checked &&
@@ -52,6 +92,7 @@ form.addEventListener("submit", (e) => {
     symbols
   );
   passwordDisplay.innerText = password;
+
   console.log(password);
 });
 
