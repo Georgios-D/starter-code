@@ -61,6 +61,7 @@ body {
   background-color: #24232a;
   border: none;
 }
+
 .btn-one:hover {
   cursor: pointer;
   fill: #e6e5ea;

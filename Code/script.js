@@ -68,7 +68,6 @@ form.addEventListener("submit", (e) => {
     value3.className = "status-strong";
     value4.className = "status-strong";
   }
-  console.log(total);
   if (
     !uppercaseLetters.checked &&
     !lowercaseLetters.checked &&
@@ -92,8 +91,6 @@ form.addEventListener("submit", (e) => {
     symbols
   );
   passwordDisplay.innerText = password;
-
-  console.log(password);
 });
 
 function generatePassword(
